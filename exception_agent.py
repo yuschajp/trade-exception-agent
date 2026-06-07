@@ -44,7 +44,7 @@ class TradeExceptionAgent:
                 "error_type": "INVALID_CURRENCY",
                 "field": "currency",
                 "bad_value": currency,
-                "fix_suggestion": "USD"  # Simulated LLM contextual reasoning
+                "fix_suggestion": "USD"
             }
             
         expected_lei = self.fetch_mcp_reference_data("LEI", broker)
@@ -108,7 +108,7 @@ if __name__ == "__main__":
         "quantity": 5000,
         "price": 175.00,
         "counterparty": "GOLDMAN_SACHS",
-        "broker_lei": "INCORRECT_LEI_99999999",  # The broken element causing the transaction drop
+        "broker_lei": "INCORRECT_LEI_99999999",
         "currency": "USD"
     }
     
