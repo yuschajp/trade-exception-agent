@@ -108,8 +108,8 @@ if __name__ == "__main__":
         "quantity": 5000,
         "price": 175.00,
         "counterparty": "GOLDMAN_SACHS",
-        "broker_lei": "INCORRECT_LEI_99999999",
-        "currency": "USD"
+        "broker_lei": "GSFOOBAR123456789012",  # Changed to the valid reference LEI
+        "currency": "XYZ"                       # Changed to an unapproved currency code
     }
     
     # Initialize the operational agent
