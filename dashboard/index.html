@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Trade Exception Triage Agent</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+  :root {
+    --navy:#1B3A5C;--navy2:#0f2236;--accent:#2E6DA4;
+    --green:#16a34a;--red:#dc2626;--amber:#d97706;--purple:#7c3aed;
+    --bg:#f5f7fa;--card:#fff;--border:#e2e8f0;--text:#111827;--muted:#6b7280;
+    --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--bg);color:var(--text);}
+
+  header{background:var(--navy2);padding:16px 36px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--accent);}
+  header h1{font-family:var(--mono);font-size:1.05rem;color:#fff;font-weight:600;}
+  header .sub{font-family:var(--mono);font-size:0.68rem;color:rgba(255,255,255,0.4);margin-top:3px;}
+  .live-badge{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:0.7rem;color:#4ade80;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.25);padding:5px 12px;border-radius:20px;}
+  .live-dot{width:6px;height:6px;background:#4ade80;border-radius:50%;animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+  .container{max-width:1200px;margin:0 auto;padding:24px 20px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.05);margin-bottom:18px;}
+  .card-label{font-family:var(--mono);font-size:0.67rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:16px;}
+
+  .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px;}
+  .kpi{text-align:center;padding:14px 10px;}
+  .kpi .val{font-family:var(--mono);font-size:1.7rem;font-weight:600;color:var(--navy);}
+  .kpi .lbl{font-size:0.65rem;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:0.7px;}
+
+  .controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:18px;}
+  .btn{padding:8px 18px;border:none;border-radius:7px;font-family:var(--mono);font-size:0.8rem;font-weight:600;cursor:pointer;transition:all 0.15s;}
+  .btn-primary{background:var(--navy);color:#fff;}
+  .btn-primary:hover{background:var(--accent);}
+  .btn-primary:disabled{background:#9ca3af;cursor:not-allowed;}
+  .btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border);}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+  .spinner{display:inline-block;width:11px;height:11px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:5px;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .filter-row{display:flex;gap:8px;flex-wrap:wrap;}
+  .filter-chip{font-family:var(--mono);font-size:0.7rem;padding:4px 12px;border-radius:20px;border:1px solid var(--border);cursor:pointer;background:#f8fafc;color:var(--muted);transition:all 0.15s;}
+  .filter-chip.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .filter-chip.crit{border-color:#fca5a5;}
+  .filter-chip.crit.active{background:var(--red);border-color:var(--red);}
+  .filter-chip.high{border-color:#fde68a;}
+  .filter-chip.high.active{background:var(--amber);border-color:var(--amber);}
+  .filter-chip.med{border-color:#bfdbfe;}
+  .filter-chip.med.active{background:var(--accent);border-color:var(--accent);}
+
+  /* Exception queue */
+  .queue{display:flex;flex-direction:column;gap:10px;max-height:520px;overflow-y:auto;}
+  .exc-card{border:1px solid var(--border);border-radius:8px;padding:14px 16px;cursor:pointer;transition:all 0.15s;border-left:4px solid var(--border);}
+  .exc-card:hover{border-color:var(--accent);box-shadow:0 2px 8px rgba(0,0,0,0.08);}
+  .exc-card.selected{border-color:var(--accent);background:#f0f7ff;}
+  .exc-card.sev-CRITICAL{border-left-color:var(--red);}
+  .exc-card.sev-HIGH{border-left-color:var(--amber);}
+  .exc-card.sev-MEDIUM{border-left-color:var(--accent);}
+  .exc-card.sev-LOW{border-left-color:var(--green);}
+  .exc-card.status-RESOLVED{opacity:0.5;}
+
+  .exc-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .sev-badge{font-family:var(--mono);font-size:0.62rem;font-weight:600;padding:2px 8px;border-radius:10px;}
+  .sev-CRITICAL{background:#fef2f2;color:var(--red);}
+  .sev-HIGH{background:#fffbeb;color:var(--amber);}
+  .sev-MEDIUM{background:#eff6ff;color:var(--accent);}
+  .sev-LOW{background:#f0fdf4;color:var(--green);}
+  .exc-id{font-family:var(--mono);font-size:0.7rem;color:var(--muted);}
+  .exc-type{font-weight:600;font-size:0.88rem;flex:1;}
+  .auto-badge{font-family:var(--mono);font-size:0.62rem;padding:2px 8px;border-radius:10px;background:#f0fdf4;color:var(--green);border:1px solid #86efac;}
+  .manual-badge{font-family:var(--mono);font-size:0.62rem;padding:2px 8px;border-radius:10px;background:#fef2f2;color:var(--red);border:1px solid #fca5a5;}
+
+  .exc-meta{display:flex;gap:16px;font-size:0.75rem;color:var(--muted);font-family:var(--mono);}
+  .exc-meta span{display:flex;align-items:center;gap:4px;}
+
+  /* Detail panel */
+  .detail-panel{display:none;}
+  .detail-panel.visible{display:block;}
+  .memo-box{background:#0f172a;color:#e2e8f0;font-family:var(--mono);font-size:0.72rem;padding:16px;border-radius:8px;overflow-x:auto;line-height:1.7;max-height:300px;overflow-y:auto;}
+  .sql-box{background:#1e1e2e;color:#a6da95;font-family:var(--mono);font-size:0.72rem;padding:16px;border-radius:8px;overflow-x:auto;line-height:1.7;max-height:200px;overflow-y:auto;}
+  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+  .detail-field{font-size:0.8rem;}
+  .detail-field .key{font-family:var(--mono);font-size:0.67rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:3px;}
+  .detail-field .value{font-weight:500;}
+
+  .layout{display:grid;grid-template-columns:1fr 1.4fr;gap:18px;}
+
+  @media(max-width:780px){
+    .layout{grid-template-columns:1fr;}
+    .kpi-row{grid-template-columns:repeat(3,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Trade Exception Triage Agent <span style="font-size:0.75rem;opacity:0.5;margin-left:8px;">v2</span></h1>
+    <div class="sub">Multi-asset · LLM-powered classification · Audit trail · github.com/yuschajp/trade-exception-agent</div>
+  </div>
+  <div class="live-badge"><div class="live-dot"></div>Agentic Mode</div>
+</header>
+
+<div class="container">
+
+  <div class="kpi-row">
+    <div class="card kpi"><div class="val" id="k-total">0</div><div class="lbl">Exceptions</div></div>
+    <div class="card kpi"><div class="val" id="k-critical" style="color:var(--red)">0</div><div class="lbl">Critical</div></div>
+    <div class="card kpi"><div class="val" id="k-auto" style="color:var(--green)">0</div><div class="lbl">Auto-Repair</div></div>
+    <div class="card kpi"><div class="val" id="k-manual" style="color:var(--amber)">0</div><div class="lbl">Manual</div></div>
+    <div class="card kpi"><div class="val" id="k-resolved" style="color:var(--accent)">0</div><div class="lbl">Resolved</div></div>
+  </div>
+
+  <div class="controls">
+    <button class="btn btn-primary" id="gen-btn" onclick="generateBatch()">⚡ Generate Exceptions</button>
+    <button class="btn btn-ghost" onclick="clearAll()">Clear</button>
+    <div class="filter-row" id="filters">
+      <div class="filter-chip active" onclick="setFilter('ALL',this)">All</div>
+      <div class="filter-chip crit" onclick="setFilter('CRITICAL',this)">Critical</div>
+      <div class="filter-chip high" onclick="setFilter('HIGH',this)">High</div>
+      <div class="filter-chip med" onclick="setFilter('MEDIUM',this)">Medium</div>
+      <div class="filter-chip" onclick="setFilter('AUTO',this)">Auto-Repair</div>
+      <div class="filter-chip" onclick="setFilter('MANUAL',this)">Manual Only</div>
+    </div>
+  </div>
+
+  <div class="layout">
+
+    <!-- Queue -->
+    <div class="card">
+      <div class="card-label">Exception Queue</div>
+      <div class="queue" id="queue">
+        <div style="color:var(--muted);font-size:0.85rem;padding:20px 0;text-align:center;">
+          Click "Generate Exceptions" to populate the queue.
+        </div>
+      </div>
+    </div>
+
+    <!-- Detail -->
+    <div class="card">
+      <div class="card-label">Exception Detail</div>
+      <div id="detail-placeholder" style="color:var(--muted);font-size:0.85rem;padding:20px 0;">
+        Select an exception from the queue to see full triage output.
+      </div>
+      <div class="detail-panel" id="detail-panel">
+
+        <div class="detail-grid">
+          <div class="detail-field"><div class="key">Exception ID</div><div class="value" id="d-id"></div></div>
+          <div class="detail-field"><div class="key">Trade ID</div><div class="value" id="d-tid"></div></div>
+          <div class="detail-field"><div class="key">Error Type</div><div class="value" id="d-type"></div></div>
+          <div class="detail-field"><div class="key">Asset Class</div><div class="value" id="d-asset"></div></div>
+          <div class="detail-field"><div class="key">Severity</div><div class="value" id="d-sev"></div></div>
+          <div class="detail-field"><div class="key">SLA</div><div class="value" id="d-sla"></div></div>
+          <div class="detail-field"><div class="key">Owning Team</div><div class="value" id="d-team" style="grid-column:span 2"></div></div>
+          <div class="detail-field"><div class="key">Fix Action</div><div class="value" id="d-fix"></div></div>
+          <div class="detail-field"><div class="key">Auto-Repair</div><div class="value" id="d-auto"></div></div>
+        </div>
+
+        <div style="margin-bottom:12px;">
+          <div class="card-label" style="margin-bottom:8px;">Resolution Memo</div>
+          <div class="memo-box" id="d-memo"></div>
+        </div>
+
+        <div>
+          <div class="card-label" style="margin-bottom:8px;">SQL Repair Script</div>
+          <div class="sql-box" id="d-sql"></div>
+        </div>
+
+        <button class="btn btn-primary" style="margin-top:14px;width:100%;" onclick="resolveSelected()">
+          ✅ Mark Resolved
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────────────
+let exceptions = [];
+let selected   = null;
+let resolved   = 0;
+let filter     = 'ALL';
+
+// ── Reference data ─────────────────────────────────────────────────────────
+const COUNTERPARTIES = {
+  GOLDMAN_SACHS:"GSFOOBAR123456789012",JP_MORGAN:"JPMORG00001234567890",
+  CITADEL:"CITADL00009876543210",MILLENNIUM:"MLMGMT00001111222233",
+  SCHONFELD:"SCHON000002222233334",BARCLAYS:"BARCLY00005678901234",
+};
+const VALID_CCY = ["USD","EUR","GBP","JPY","CAD","AUD","CHF"];
+const SECURITIES = {
+  EQ:["AAPL","MSFT","JPM","GS","TSLA","NVDA"],
+  FI:["US10Y","US2Y","CORP_IG_001","MBS_001"],
+  FX:["EUR/USD","GBP/USD","USD/JPY"],
+  FUT:["ESZ4","NQZ4","CLF5","ZNZ4"],
+  OTC:["IRS_USD_10Y","CDS_IG_5Y","FX_FWD_EURUSD_3M"],
+};
+const EXCEPTION_TYPES = [
+  {error_type:"INVALID_CURRENCY",category:"Static Data",severity:"HIGH",team:"Middle Office — Static Data",sla:2},
+  {error_type:"MISMATCHED_BROKER_LEI",category:"Counterparty Data",severity:"HIGH",team:"Middle Office — Counterparty",sla:4},
+  {error_type:"SETTLEMENT_FAIL",category:"Settlement",severity:"CRITICAL",team:"Operations — Settlement",sla:1},
+  {error_type:"PRICE_TOLERANCE_BREACH",category:"Pricing",severity:"MEDIUM",team:"Middle Office — Pricing",sla:4},
+  {error_type:"MISSING_UTI",category:"Regulatory Reporting",severity:"HIGH",team:"Operations — Reg Reporting",sla:2},
+  {error_type:"MARGIN_CALL_DISPUTE",category:"Margin & Collateral",severity:"CRITICAL",team:"Middle Office — Margin",sla:1},
+  {error_type:"DUPLICATE_TRADE",category:"Booking",severity:"HIGH",team:"Middle Office — Trade Capture",sla:2},
+  {error_type:"SECURITY_NOT_FOUND",category:"Static Data",severity:"HIGH",team:"Middle Office — Static Data",sla:3},
+  {error_type:"CONFIRMATION_MISMATCH",category:"Confirmation",severity:"MEDIUM",team:"Middle Office — Confirmations",sla:6},
+  {error_type:"NOSTRO_BREAK",category:"Reconciliation",severity:"HIGH",team:"Operations — Reconciliation",sla:4},
+];
+const AUTO_REPAIRABLE = ["INVALID_CURRENCY","MISMATCHED_BROKER_LEI","MISSING_UTI"];
+
+// ── Generators ─────────────────────────────────────────────────────────────
+function rnd(arr){return arr[Math.floor(Math.random()*arr.length)];}
+function rndInt(a,b){return Math.floor(Math.random()*(b-a))+a;}
+function uid(){return Math.random().toString(36).substr(2,8).toUpperCase();}
+
+function generateException(){
+  const tmpl      = rnd(EXCEPTION_TYPES);
+  const assetClass= rnd(["EQ","FI","FX","FUT","OTC"]);
+  const ctpy      = rnd(Object.keys(COUNTERPARTIES));
+  const security  = rnd(SECURITIES[assetClass]);
+  const currency  = rnd(VALID_CCY);
+  const notional  = rndInt(10000,5000000);
+  const price     = (Math.random()*490+10).toFixed(4);
+  const tradeId   = `TRD-2026-${rndInt(1000,9999)}`;
+  const excId     = `EXC-${uid()}`;
+
+  // Inject errors
+  let badCcy = currency, badLei = COUNTERPARTIES[ctpy], badSec = security;
+  let uti = `UTI-${uid()}`, ourMargin = 0, ctpyMargin = 0, dupOf = null, breakAmt = 0;
+  const et = tmpl.error_type;
+  if(et==="INVALID_CURRENCY")    badCcy   = rnd(["XYZ","ZZZ","AAA","999"]);
+  if(et==="MISMATCHED_BROKER_LEI") badLei = "BADLEI"+rndInt(10000,99999);
+  if(et==="MISSING_UTI")         uti      = null;
+  if(et==="MARGIN_CALL_DISPUTE"){ ourMargin=rndInt(100000,2000000); ctpyMargin=Math.floor(ourMargin*(0.8+Math.random()*0.4)); }
+  if(et==="DUPLICATE_TRADE")     dupOf    = `TRD-2026-${rndInt(1000,9999)}`;
+  if(et==="SECURITY_NOT_FOUND")  badSec   = `UNKNOWN_${rndInt(1000,9999)}`;
+  if(et==="NOSTRO_BREAK")        breakAmt = rndInt(5000,500000);
+
+  // Diagnosis
+  let diagnosis = {root_cause:et, fields_affected:[], fix_action:"MANUAL_REVIEW", auto_repairable:false};
+  if(et==="INVALID_CURRENCY")      diagnosis={...diagnosis,fields_affected:["currency"],bad_value:badCcy,suggested_fix:"USD",fix_action:"UPDATE_CURRENCY",auto_repairable:true};
+  else if(et==="MISMATCHED_BROKER_LEI") diagnosis={...diagnosis,fields_affected:["broker_lei"],bad_value:badLei,correct_value:COUNTERPARTIES[ctpy],fix_action:"UPDATE_LEI",auto_repairable:true};
+  else if(et==="MISSING_UTI")      diagnosis={...diagnosis,fields_affected:["uti"],suggested_fix:`UTI-${uid()}`,fix_action:"GENERATE_UTI",auto_repairable:true,regulatory_note:"CFTC Part 43/45 required"};
+  else if(et==="SETTLEMENT_FAIL")  diagnosis={...diagnosis,fields_affected:["settlement_status"],fix_action:"CONTACT_CUSTODIAN",escalation:"Contact custodian within 1hr"};
+  else if(et==="MARGIN_CALL_DISPUTE") diagnosis={...diagnosis,fields_affected:["margin_call"],our_calculation:ourMargin,ctpy_calculation:ctpyMargin,dispute_amount:Math.abs(ourMargin-ctpyMargin),fix_action:Math.abs(ourMargin-ctpyMargin)>500000?"ESCALATE_TO_SENIOR":"SEND_DISPUTE_NOTICE"};
+  else if(et==="DUPLICATE_TRADE")  diagnosis={...diagnosis,fields_affected:["trade_id"],duplicate_of:dupOf,fix_action:"CANCEL_DUPLICATE",escalation:"Requires trader confirmation"};
+  else if(et==="SECURITY_NOT_FOUND") diagnosis={...diagnosis,fields_affected:["security"],bad_value:badSec,fix_action:"ADD_TO_SECURITY_MASTER",escalation:"Static data team must onboard security"};
+  else if(et==="NOSTRO_BREAK")     diagnosis={...diagnosis,fields_affected:["cash_position"],break_amount:breakAmt,fix_action:breakAmt>100000?"ESCALATE_TO_SENIOR":"INVESTIGATE_BREAK"};
+  else if(et==="PRICE_TOLERANCE_BREACH") diagnosis={...diagnosis,fields_affected:["price"],fix_action:"PRICE_CHALLENGE"};
+  else if(et==="CONFIRMATION_MISMATCH") diagnosis={...diagnosis,fields_affected:["trade_terms"],fix_action:"SEND_AMENDED_CONFIRMATION"};
+
+  // Generate memo
+  const ts = new Date().toISOString().replace('T',' ').slice(0,19)+' UTC';
+  const memo = `╔══════════════════════════════════════════════════════════════╗
+║         TRADE EXCEPTION RESOLUTION MEMO                      ║
+║         Generated by TradeExceptionAgent v2                  ║
+╚══════════════════════════════════════════════════════════════╝
+
+Exception ID : ${excId}
+Trade ID     : ${tradeId}
+Generated    : ${ts}
+Severity     : ${tmpl.severity}
+Error Type   : ${et}
+Owning Team  : ${tmpl.team}
+SLA          : ${tmpl.sla} hours
+
+TRADE DETAILS
+─────────────
+Asset Class  : ${assetClass}
+Security     : ${badSec}
+Counterparty : ${ctpy}
+Notional     : $${notional.toLocaleString()}
+Currency     : ${badCcy}
+
+DIAGNOSIS
+─────────
+Root Cause   : ${et}
+Fields       : ${diagnosis.fields_affected.join(', ')||'N/A'}
+Fix Action   : ${diagnosis.fix_action}
+Auto-Repair  : ${diagnosis.auto_repairable?'Yes':'No — manual intervention required'}
+${diagnosis.suggested_fix?'Suggested Fix: '+diagnosis.suggested_fix:''}
+${diagnosis.escalation?'Escalation: '+diagnosis.escalation:''}
+${diagnosis.regulatory_note?'Regulatory: '+diagnosis.regulatory_note:''}
+
+═══════════════════════════════════════════════════════════════
+END OF MEMO — ${excId}
+═══════════════════════════════════════════════════════════════`;
+
+  // Generate SQL
+  let sql = `-- ═══════════════════════════════════════════════════════════
+-- EXCEPTION AGENT v2 — REPAIR SCRIPT
+-- Generated : ${ts}
+-- Trade ID  : ${tradeId} | Error: ${et}
+-- ═══════════════════════════════════════════════════════════\n`;
+  if(et==="INVALID_CURRENCY") sql+=`\nUPDATE trade_ledger\nSET    currency='${diagnosis.suggested_fix}',operational_status='STP_READY',last_modified_by='EXCEPTION_AGENT_V2'\nWHERE  trade_id='${tradeId}';\n\nINSERT INTO exception_audit_log(trade_id,error_type,action,resolved_by)\nVALUES('${tradeId}','${et}','AUTO_REPAIRED','EXCEPTION_AGENT_V2');`;
+  else if(et==="MISMATCHED_BROKER_LEI") sql+=`\nUPDATE trade_ledger\nSET    broker_lei='${diagnosis.correct_value}',operational_status='STP_READY',last_modified_by='EXCEPTION_AGENT_V2'\nWHERE  trade_id='${tradeId}';\n\nINSERT INTO exception_audit_log(trade_id,error_type,action,resolved_by)\nVALUES('${tradeId}','${et}','AUTO_REPAIRED','EXCEPTION_AGENT_V2');`;
+  else if(et==="MISSING_UTI") sql+=`\nUPDATE trade_ledger\nSET    uti='${diagnosis.suggested_fix}',reg_reporting_status='PENDING_SUBMISSION',last_modified_by='EXCEPTION_AGENT_V2'\nWHERE  trade_id='${tradeId}';\n\nINSERT INTO reg_reporting_queue(trade_id,uti,report_type,status)\nVALUES('${tradeId}','${diagnosis.suggested_fix}','CFTC_PART45','QUEUED');`;
+  else sql+=`\n-- No automated repair available for ${et}\n-- Manual review required by ${tmpl.team}\n\nINSERT INTO exception_audit_log(trade_id,error_type,action,resolved_by)\nVALUES('${tradeId}','${et}','ROUTED_FOR_MANUAL_REVIEW','EXCEPTION_AGENT_V2');`;
+
+  return {
+    exception_id:excId, trade_id:tradeId, error_type:et,
+    severity:tmpl.severity, category:tmpl.category, sla_hours:tmpl.sla,
+    team:tmpl.team, asset_class:assetClass, notional,
+    status:"OPEN", diagnosis, memo, sql,
+    trade_payload:{trade_id:tradeId,asset_class:assetClass,security:badSec,
+      counterparty:ctpy,currency:badCcy,notional_usd:notional,price}
+  };
+}
+
+// ── UI ─────────────────────────────────────────────────────────────────────
+function generateBatch(){
+  const btn=document.getElementById('gen-btn');
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span>Triaging…';
+  setTimeout(()=>{
+    const newExcs=[...Array(12)].map((_,i)=>generateException());
+    exceptions=[...newExcs,...exceptions];
+    renderQueue();updateKPIs();
+    btn.disabled=false;btn.textContent='⚡ Generate Exceptions';
+  },600);
+}
+
+function renderQueue(){
+  const q=document.getElementById('queue');
+  const filtered=exceptions.filter(e=>{
+    if(filter==='ALL') return true;
+    if(filter==='AUTO') return e.diagnosis.auto_repairable;
+    if(filter==='MANUAL') return !e.diagnosis.auto_repairable;
+    return e.severity===filter;
+  });
+  if(!filtered.length){q.innerHTML='<div style="color:var(--muted);font-size:0.85rem;padding:20px 0;text-align:center;">No exceptions match filter.</div>';return;}
+  q.innerHTML=filtered.map(e=>`
+    <div class="exc-card sev-${e.severity} status-${e.status} ${selected===e.exception_id?'selected':''}"
+         onclick="selectException('${e.exception_id}')">
+      <div class="exc-header">
+        <span class="sev-badge sev-${e.severity}">${e.severity}</span>
+        <span class="exc-type">${e.error_type.replace(/_/g,' ')}</span>
+        <span class="${e.diagnosis.auto_repairable?'auto-badge':'manual-badge'}">${e.diagnosis.auto_repairable?'AUTO':'MANUAL'}</span>
+        ${e.status==='RESOLVED'?'<span style="font-size:0.68rem;color:var(--green);font-family:var(--mono)">✅ RESOLVED</span>':''}
+      </div>
+      <div class="exc-meta">
+        <span>${e.exception_id}</span>
+        <span>•</span>
+        <span>${e.asset_class}</span>
+        <span>•</span>
+        <span>${e.team.split('—')[1]?.trim()||e.team}</span>
+        <span>•</span>
+        <span>SLA: ${e.sla_hours}h</span>
+      </div>
+    </div>`).join('');
+}
+
+function selectException(id){
+  selected=id;
+  const e=exceptions.find(x=>x.exception_id===id);
+  if(!e) return;
+  document.getElementById('detail-placeholder').style.display='none';
+  const p=document.getElementById('detail-panel');
+  p.classList.add('visible');
+  document.getElementById('d-id').textContent=e.exception_id;
+  document.getElementById('d-tid').textContent=e.trade_id;
+  document.getElementById('d-type').textContent=e.error_type.replace(/_/g,' ');
+  document.getElementById('d-asset').textContent=e.asset_class;
+  document.getElementById('d-sev').innerHTML=`<span class="sev-badge sev-${e.severity}">${e.severity}</span>`;
+  document.getElementById('d-sla').textContent=`${e.sla_hours} hours`;
+  document.getElementById('d-team').textContent=e.team;
+  document.getElementById('d-fix').textContent=e.diagnosis.fix_action;
+  document.getElementById('d-auto').innerHTML=e.diagnosis.auto_repairable
+    ?'<span class="auto-badge">✅ Auto-repairable</span>'
+    :'<span class="manual-badge">🔴 Manual intervention</span>';
+  document.getElementById('d-memo').textContent=e.memo;
+  document.getElementById('d-sql').textContent=e.sql;
+  renderQueue();
+}
+
+function resolveSelected(){
+  if(!selected) return;
+  const e=exceptions.find(x=>x.exception_id===selected);
+  if(e){ e.status='RESOLVED'; resolved++; }
+  updateKPIs(); renderQueue();
+  document.getElementById('detail-placeholder').style.display='block';
+  document.getElementById('detail-panel').classList.remove('visible');
+  selected=null;
+}
+
+function setFilter(f,el){
+  filter=f;
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderQueue();
+}
+
+function clearAll(){
+  exceptions=[];selected=null;resolved=0;filter='ALL';
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  document.querySelector('.filter-chip').classList.add('active');
+  renderQueue();updateKPIs();
+  document.getElementById('detail-placeholder').style.display='block';
+  document.getElementById('detail-panel').classList.remove('visible');
+}
+
+function updateKPIs(){
+  document.getElementById('k-total').textContent=exceptions.length;
+  document.getElementById('k-critical').textContent=exceptions.filter(e=>e.severity==='CRITICAL').length;
+  document.getElementById('k-auto').textContent=exceptions.filter(e=>e.diagnosis.auto_repairable).length;
+  document.getElementById('k-manual').textContent=exceptions.filter(e=>!e.diagnosis.auto_repairable).length;
+  document.getElementById('k-resolved').textContent=resolved;
+}
+</script>
+</body>
+</html>
