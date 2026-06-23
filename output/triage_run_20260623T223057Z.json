@@ -1,0 +1,362 @@
+{
+  "run_id": "20260623T223057Z",
+  "total": 10,
+  "auto_repairable": 2,
+  "manual_review": 8,
+  "by_severity": {
+    "CRITICAL": 4,
+    "HIGH": 4,
+    "MEDIUM": 2,
+    "LOW": 0
+  },
+  "results": [
+    {
+      "exception_id": "EXC-3A540C5B",
+      "triaged_at": "2026-06-23T22:30:57.070257+00:00",
+      "error_type": "MARGIN_CALL_DISPUTE",
+      "severity": "CRITICAL",
+      "category": "Margin & Collateral",
+      "status": "TRIAGED",
+      "diagnosis": {
+        "root_cause": "MARGIN_CALL_DISPUTE",
+        "fields_affected": [
+          "margin_call"
+        ],
+        "fix_action": "SEND_DISPUTE_NOTICE",
+        "auto_repairable": false,
+        "our_calculation": 1006297.54,
+        "ctpy_calculation": 972206.06,
+        "dispute_amount": 34091.48
+      },
+      "routing": {
+        "owning_team": "Middle Office \u2014 Margin",
+        "priority": 1,
+        "severity": "CRITICAL",
+        "sla_deadline": "2026-06-23T23:30:57.069399+00:00",
+        "sla_hours": 1,
+        "escalate_to": "Head of Middle Office"
+      },
+      "resolution_memo": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551         TRADE EXCEPTION RESOLUTION MEMO                      \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nException ID : EXC-3A540C5B\nTrade ID     : TRD-2026-2436\nGenerated    : 2026-06-23 22:30:57 UTC\nSeverity     : CRITICAL\nError Type   : MARGIN_CALL_DISPUTE\nOwning Team  : Middle Office \u2014 Margin\nSLA          : 1 hours\n\nTRADE DETAILS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nAsset Class  : EQ\nSecurity     : NVDA\nCounterparty : BARCLAYS\nNotional     : $580,808.34\nCurrency     : JPY\nSource System: MUREX\n\nDIAGNOSIS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nRoot Cause   : MARGIN_CALL_DISPUTE\nFields       : margin_call\nFix Action   : SEND_DISPUTE_NOTICE\nAuto-Repair  : No \u2014 manual intervention required\n\n\n\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\nEND OF MEMO \u2014 EXC-3A540C5B\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+      "sql_repair": "-- EXCEPTION AGENT v2 \u2014 MARGIN_CALL_DISPUTE \u2014 TRD-2026-2436 \u2014 2026-06-23 22:30:57\n-- No automated repair for MARGIN_CALL_DISPUTE \u2014 manual review required\nINSERT INTO exception_audit_log(trade_id,error_type,action,resolved_by) VALUES('TRD-2026-2436','MARGIN_CALL_DISPUTE','ROUTED_FOR_MANUAL_REVIEW','EXCEPTION_AGENT_V2');",
+      "llm_analysis": null,
+      "audit_entry": {
+        "exception_id": "EXC-3A540C5B",
+        "action": "TRIAGED",
+        "agent": "TradeExceptionAgent_v2",
+        "timestamp": "2026-06-23T22:30:57.070262+00:00"
+      }
+    },
+    {
+      "exception_id": "EXC-E48A78B1",
+      "triaged_at": "2026-06-23T22:30:57.070321+00:00",
+      "error_type": "MARGIN_CALL_DISPUTE",
+      "severity": "CRITICAL",
+      "category": "Margin & Collateral",
+      "status": "TRIAGED",
+      "diagnosis": {
+        "root_cause": "MARGIN_CALL_DISPUTE",
+        "fields_affected": [
+          "margin_call"
+        ],
+        "fix_action": "SEND_DISPUTE_NOTICE",
+        "auto_repairable": false,
+        "our_calculation": 1249700.07,
+        "ctpy_calculation": 1312533.63,
+        "dispute_amount": 62833.56
+      },
+      "routing": {
+        "owning_team": "Middle Office \u2014 Margin",
+        "priority": 1,
+        "severity": "CRITICAL",
+        "sla_deadline": "2026-06-23T23:30:57.069679+00:00",
+        "sla_hours": 1,
+        "escalate_to": "Head of Middle Office"
+      },
+      "resolution_memo": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551         TRADE EXCEPTION RESOLUTION MEMO                      \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nException ID : EXC-E48A78B1\nTrade ID     : TRD-2026-4435\nGenerated    : 2026-06-23 22:30:57 UTC\nSeverity     : CRITICAL\nError Type   : MARGIN_CALL_DISPUTE\nOwning Team  : Middle Office \u2014 Margin\nSLA          : 1 hours\n\nTRADE DETAILS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nAsset Class  : EQ\nSecurity     : GS\nCounterparty : CITADEL\nNotional     : $2,906,501.40\nCurrency     : CAD\nSource System: MUREX\n\nDIAGNOSIS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nRoot Cause   : MARGIN_CALL_DISPUTE\nFields       : margin_call\nFix Action   : SEND_DISPUTE_NOTICE\nAuto-Repair  : No \u2014 manual intervention required\n\n\n\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\nEND OF MEMO \u2014 EXC-E48A78B1\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+      "sql_repair": "-- EXCEPTION AGENT v2 \u2014 MARGIN_CALL_DISPUTE \u2014 TRD-2026-4435 \u2014 2026-06-23 22:30:57\n-- No automated repair for MARGIN_CALL_DISPUTE \u2014 manual review required\nINSERT INTO exception_audit_log(trade_id,error_type,action,resolved_by) VALUES('TRD-2026-4435','MARGIN_CALL_DISPUTE','ROUTED_FOR_MANUAL_REVIEW','EXCEPTION_AGENT_V2');",
+      "llm_analysis": null,
+      "audit_entry": {
+        "exception_id": "EXC-E48A78B1",
+        "action": "TRIAGED",
+        "agent": "TradeExceptionAgent_v2",
+        "timestamp": "2026-06-23T22:30:57.070326+00:00"
+      }
+    },
+    {
+      "exception_id": "EXC-1525BED7",
+      "triaged_at": "2026-06-23T22:30:57.070379+00:00",
+      "error_type": "SETTLEMENT_FAIL",
+      "severity": "CRITICAL",
+      "category": "Settlement",
+      "status": "TRIAGED",
+      "diagnosis": {
+        "root_cause": "SETTLEMENT_FAIL",
+        "fields_affected": [
+          "settlement_status"
+        ],
+        "fix_action": "CONTACT_CUSTODIAN",
+        "auto_repairable": false,
+        "escalation": "Contact custodian within 1hr"
+      },
+      "routing": {
+        "owning_team": "Operations \u2014 Settlement",
+        "priority": 1,
+        "severity": "CRITICAL",
+        "sla_deadline": "2026-06-23T23:30:57.069843+00:00",
+        "sla_hours": 1,
+        "escalate_to": "Head of Middle Office"
+      },
+      "resolution_memo": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551         TRADE EXCEPTION RESOLUTION MEMO                      \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nException ID : EXC-1525BED7\nTrade ID     : TRD-2026-4023\nGenerated    : 2026-06-23 22:30:57 UTC\nSeverity     : CRITICAL\nError Type   : SETTLEMENT_FAIL\nOwning Team  : Operations \u2014 Settlement\nSLA          : 1 hours\n\nTRADE DETAILS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nAsset Class  : FUT\nSecurity     : NQZ4\nCounterparty : BARCLAYS\nNotional     : $3,977,081.24\nCurrency     : GBP\nSource System: ALADDIN\n\nDIAGNOSIS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nRoot Cause   : SETTLEMENT_FAIL\nFields       : settlement_status\nFix Action   : CONTACT_CUSTODIAN\nAuto-Repair  : No \u2014 manual intervention required\n\nEscalation: Contact custodian within 1hr\n\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\nEND OF MEMO \u2014 EXC-1525BED7\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+      "sql_repair": "-- EXCEPTION AGENT v2 \u2014 SETTLEMENT_FAIL \u2014 TRD-2026-4023 \u2014 2026-06-23 22:30:57\n-- No automated repair for SETTLEMENT_FAIL \u2014 manual review required\nINSERT INTO exception_audit_log(trade_id,error_type,action,resolved_by) VALUES('TRD-2026-4023','SETTLEMENT_FAIL','ROUTED_FOR_MANUAL_REVIEW','EXCEPTION_AGENT_V2');",
+      "llm_analysis": null,
+      "audit_entry": {
+        "exception_id": "EXC-1525BED7",
+        "action": "TRIAGED",
+        "agent": "TradeExceptionAgent_v2",
+        "timestamp": "2026-06-23T22:30:57.070383+00:00"
+      }
+    },
+    {
+      "exception_id": "EXC-BC0957B3",
+      "triaged_at": "2026-06-23T22:30:57.070432+00:00",
+      "error_type": "MARGIN_CALL_DISPUTE",
+      "severity": "CRITICAL",
+      "category": "Margin & Collateral",
+      "status": "TRIAGED",
+      "diagnosis": {
+        "root_cause": "MARGIN_CALL_DISPUTE",
+        "fields_affected": [
+          "margin_call"
+        ],
+        "fix_action": "SEND_DISPUTE_NOTICE",
+        "auto_repairable": false,
+        "our_calculation": 1115378.78,
+        "ctpy_calculation": 1060307.92,
+        "dispute_amount": 55070.86
+      },
+      "routing": {
+        "owning_team": "Middle Office \u2014 Margin",
+        "priority": 1,
+        "severity": "CRITICAL",
+        "sla_deadline": "2026-06-23T23:30:57.070023+00:00",
+        "sla_hours": 1,
+        "escalate_to": "Head of Middle Office"
+      },
+      "resolution_memo": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551         TRADE EXCEPTION RESOLUTION MEMO                      \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nException ID : EXC-BC0957B3\nTrade ID     : TRD-2026-6545\nGenerated    : 2026-06-23 22:30:57 UTC\nSeverity     : CRITICAL\nError Type   : MARGIN_CALL_DISPUTE\nOwning Team  : Middle Office \u2014 Margin\nSLA          : 1 hours\n\nTRADE DETAILS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nAsset Class  : FX\nSecurity     : USD/JPY\nCounterparty : BARCLAYS\nNotional     : $1,578,116.51\nCurrency     : JPY\nSource System: MUREX\n\nDIAGNOSIS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nRoot Cause   : MARGIN_CALL_DISPUTE\nFields       : margin_call\nFix Action   : SEND_DISPUTE_NOTICE\nAuto-Repair  : No \u2014 manual intervention required\n\n\n\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\nEND OF MEMO \u2014 EXC-BC0957B3\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+      "sql_repair": "-- EXCEPTION AGENT v2 \u2014 MARGIN_CALL_DISPUTE \u2014 TRD-2026-6545 \u2014 2026-06-23 22:30:57\n-- No automated repair for MARGIN_CALL_DISPUTE \u2014 manual review required\nINSERT INTO exception_audit_log(trade_id,error_type,action,resolved_by) VALUES('TRD-2026-6545','MARGIN_CALL_DISPUTE','ROUTED_FOR_MANUAL_REVIEW','EXCEPTION_AGENT_V2');",
+      "llm_analysis": null,
+      "audit_entry": {
+        "exception_id": "EXC-BC0957B3",
+        "action": "TRIAGED",
+        "agent": "TradeExceptionAgent_v2",
+        "timestamp": "2026-06-23T22:30:57.070436+00:00"
+      }
+    },
+    {
+      "exception_id": "EXC-3261B683",
+      "triaged_at": "2026-06-23T22:30:57.070523+00:00",
+      "error_type": "MISSING_UTI",
+      "severity": "HIGH",
+      "category": "Regulatory Reporting",
+      "status": "TRIAGED",
+      "diagnosis": {
+        "root_cause": "MISSING_UTI",
+        "fields_affected": [
+          "uti"
+        ],
+        "fix_action": "GENERATE_UTI",
+        "auto_repairable": true,
+        "suggested_fix": "UTI-50FDD332C6594AF2",
+        "regulatory_note": "CFTC Part 43/45 required"
+      },
+      "routing": {
+        "owning_team": "Operations \u2014 Reg Reporting",
+        "priority": 2,
+        "severity": "HIGH",
+        "sla_deadline": "2026-06-24T00:30:57.069273+00:00",
+        "sla_hours": 2,
+        "escalate_to": null
+      },
+      "resolution_memo": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551         TRADE EXCEPTION RESOLUTION MEMO                      \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nException ID : EXC-3261B683\nTrade ID     : TRD-2026-7623\nGenerated    : 2026-06-23 22:30:57 UTC\nSeverity     : HIGH\nError Type   : MISSING_UTI\nOwning Team  : Operations \u2014 Reg Reporting\nSLA          : 2 hours\n\nTRADE DETAILS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nAsset Class  : OTC\nSecurity     : EUR/USD\nCounterparty : GOLDMAN_SACHS\nNotional     : $1,385,391.70\nCurrency     : EUR\nSource System: MUREX\n\nDIAGNOSIS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nRoot Cause   : MISSING_UTI\nFields       : uti\nFix Action   : GENERATE_UTI\nAuto-Repair  : Yes\nSuggested Fix: UTI-50FDD332C6594AF2\n\n\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\nEND OF MEMO \u2014 EXC-3261B683\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+      "sql_repair": "-- EXCEPTION AGENT v2 \u2014 MISSING_UTI \u2014 TRD-2026-7623 \u2014 2026-06-23 22:30:57\nUPDATE trade_ledger SET uti='UTI-50FDD332C6594AF2',reg_reporting_status='PENDING_SUBMISSION',last_modified_by='EXCEPTION_AGENT_V2' WHERE trade_id='TRD-2026-7623';\nINSERT INTO reg_reporting_queue(trade_id,uti,report_type,status) VALUES('TRD-2026-7623','UTI-50FDD332C6594AF2','CFTC_PART45','QUEUED');",
+      "llm_analysis": null,
+      "audit_entry": {
+        "exception_id": "EXC-3261B683",
+        "action": "TRIAGED",
+        "agent": "TradeExceptionAgent_v2",
+        "timestamp": "2026-06-23T22:30:57.070528+00:00"
+      }
+    },
+    {
+      "exception_id": "EXC-4974E07C",
+      "triaged_at": "2026-06-23T22:30:57.070571+00:00",
+      "error_type": "DUPLICATE_TRADE",
+      "severity": "HIGH",
+      "category": "Booking",
+      "status": "TRIAGED",
+      "diagnosis": {
+        "root_cause": "DUPLICATE_TRADE",
+        "fields_affected": [
+          "trade_id"
+        ],
+        "fix_action": "CANCEL_DUPLICATE",
+        "auto_repairable": false,
+        "duplicate_of": "TRD-2026-6631",
+        "escalation": "Requires trader confirmation"
+      },
+      "routing": {
+        "owning_team": "Middle Office \u2014 Trade Capture",
+        "priority": 2,
+        "severity": "HIGH",
+        "sla_deadline": "2026-06-24T00:30:57.069591+00:00",
+        "sla_hours": 2,
+        "escalate_to": null
+      },
+      "resolution_memo": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551         TRADE EXCEPTION RESOLUTION MEMO                      \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nException ID : EXC-4974E07C\nTrade ID     : TRD-2026-6297\nGenerated    : 2026-06-23 22:30:57 UTC\nSeverity     : HIGH\nError Type   : DUPLICATE_TRADE\nOwning Team  : Middle Office \u2014 Trade Capture\nSLA          : 2 hours\n\nTRADE DETAILS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nAsset Class  : OTC\nSecurity     : CDS_IG_5Y\nCounterparty : MILLENNIUM\nNotional     : $1,392,825.79\nCurrency     : AUD\nSource System: ALADDIN\n\nDIAGNOSIS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nRoot Cause   : DUPLICATE_TRADE\nFields       : trade_id\nFix Action   : CANCEL_DUPLICATE\nAuto-Repair  : No \u2014 manual intervention required\n\nEscalation: Requires trader confirmation\n\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\nEND OF MEMO \u2014 EXC-4974E07C\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+      "sql_repair": "-- EXCEPTION AGENT v2 \u2014 DUPLICATE_TRADE \u2014 TRD-2026-6297 \u2014 2026-06-23 22:30:57\n-- No automated repair for DUPLICATE_TRADE \u2014 manual review required\nINSERT INTO exception_audit_log(trade_id,error_type,action,resolved_by) VALUES('TRD-2026-6297','DUPLICATE_TRADE','ROUTED_FOR_MANUAL_REVIEW','EXCEPTION_AGENT_V2');",
+      "llm_analysis": null,
+      "audit_entry": {
+        "exception_id": "EXC-4974E07C",
+        "action": "TRIAGED",
+        "agent": "TradeExceptionAgent_v2",
+        "timestamp": "2026-06-23T22:30:57.070574+00:00"
+      }
+    },
+    {
+      "exception_id": "EXC-D1151D8F",
+      "triaged_at": "2026-06-23T22:30:57.070621+00:00",
+      "error_type": "SECURITY_NOT_FOUND",
+      "severity": "HIGH",
+      "category": "Static Data",
+      "status": "TRIAGED",
+      "diagnosis": {
+        "root_cause": "SECURITY_NOT_FOUND",
+        "fields_affected": [
+          "security"
+        ],
+        "fix_action": "ADD_TO_SECURITY_MASTER",
+        "auto_repairable": false,
+        "bad_value": "UNKNOWN_3933",
+        "escalation": "Static data team must onboard security"
+      },
+      "routing": {
+        "owning_team": "Middle Office \u2014 Static Data",
+        "priority": 2,
+        "severity": "HIGH",
+        "sla_deadline": "2026-06-24T01:30:57.069939+00:00",
+        "sla_hours": 3,
+        "escalate_to": null
+      },
+      "resolution_memo": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551         TRADE EXCEPTION RESOLUTION MEMO                      \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nException ID : EXC-D1151D8F\nTrade ID     : TRD-2026-1611\nGenerated    : 2026-06-23 22:30:57 UTC\nSeverity     : HIGH\nError Type   : SECURITY_NOT_FOUND\nOwning Team  : Middle Office \u2014 Static Data\nSLA          : 3 hours\n\nTRADE DETAILS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nAsset Class  : EQ\nSecurity     : UNKNOWN_3933\nCounterparty : BARCLAYS\nNotional     : $611,463.12\nCurrency     : JPY\nSource System: MUREX\n\nDIAGNOSIS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nRoot Cause   : SECURITY_NOT_FOUND\nFields       : security\nFix Action   : ADD_TO_SECURITY_MASTER\nAuto-Repair  : No \u2014 manual intervention required\n\nEscalation: Static data team must onboard security\n\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\nEND OF MEMO \u2014 EXC-D1151D8F\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+      "sql_repair": "-- EXCEPTION AGENT v2 \u2014 SECURITY_NOT_FOUND \u2014 TRD-2026-1611 \u2014 2026-06-23 22:30:57\n-- No automated repair for SECURITY_NOT_FOUND \u2014 manual review required\nINSERT INTO exception_audit_log(trade_id,error_type,action,resolved_by) VALUES('TRD-2026-1611','SECURITY_NOT_FOUND','ROUTED_FOR_MANUAL_REVIEW','EXCEPTION_AGENT_V2');",
+      "llm_analysis": null,
+      "audit_entry": {
+        "exception_id": "EXC-D1151D8F",
+        "action": "TRIAGED",
+        "agent": "TradeExceptionAgent_v2",
+        "timestamp": "2026-06-23T22:30:57.070625+00:00"
+      }
+    },
+    {
+      "exception_id": "EXC-629B3FC7",
+      "triaged_at": "2026-06-23T22:30:57.070690+00:00",
+      "error_type": "INVALID_CURRENCY",
+      "severity": "HIGH",
+      "category": "Static Data",
+      "status": "TRIAGED",
+      "diagnosis": {
+        "root_cause": "INVALID_CURRENCY",
+        "fields_affected": [
+          "currency"
+        ],
+        "fix_action": "UPDATE_CURRENCY",
+        "auto_repairable": true,
+        "bad_value": "ZZZ",
+        "suggested_fix": "USD"
+      },
+      "routing": {
+        "owning_team": "Middle Office \u2014 Static Data",
+        "priority": 2,
+        "severity": "HIGH",
+        "sla_deadline": "2026-06-24T00:30:57.070096+00:00",
+        "sla_hours": 2,
+        "escalate_to": null
+      },
+      "resolution_memo": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551         TRADE EXCEPTION RESOLUTION MEMO                      \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nException ID : EXC-629B3FC7\nTrade ID     : TRD-2026-6669\nGenerated    : 2026-06-23 22:30:57 UTC\nSeverity     : HIGH\nError Type   : INVALID_CURRENCY\nOwning Team  : Middle Office \u2014 Static Data\nSLA          : 2 hours\n\nTRADE DETAILS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nAsset Class  : FI\nSecurity     : CORP_HY_002\nCounterparty : MILLENNIUM\nNotional     : $4,837,415.24\nCurrency     : ZZZ\nSource System: BLOOMBERG\n\nDIAGNOSIS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nRoot Cause   : INVALID_CURRENCY\nFields       : currency\nFix Action   : UPDATE_CURRENCY\nAuto-Repair  : Yes\nSuggested Fix: USD\n\n\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\nEND OF MEMO \u2014 EXC-629B3FC7\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+      "sql_repair": "-- EXCEPTION AGENT v2 \u2014 INVALID_CURRENCY \u2014 TRD-2026-6669 \u2014 2026-06-23 22:30:57\nUPDATE trade_ledger SET currency='USD',operational_status='STP_READY',last_modified_by='EXCEPTION_AGENT_V2' WHERE trade_id='TRD-2026-6669';\nINSERT INTO exception_audit_log(trade_id,error_type,action,resolved_by) VALUES('TRD-2026-6669','INVALID_CURRENCY','AUTO_REPAIRED','EXCEPTION_AGENT_V2');",
+      "llm_analysis": null,
+      "audit_entry": {
+        "exception_id": "EXC-629B3FC7",
+        "action": "TRIAGED",
+        "agent": "TradeExceptionAgent_v2",
+        "timestamp": "2026-06-23T22:30:57.070694+00:00"
+      }
+    },
+    {
+      "exception_id": "EXC-F66B40EA",
+      "triaged_at": "2026-06-23T22:30:57.070739+00:00",
+      "error_type": "CONFIRMATION_MISMATCH",
+      "severity": "MEDIUM",
+      "category": "Confirmation",
+      "status": "TRIAGED",
+      "diagnosis": {
+        "root_cause": "CONFIRMATION_MISMATCH",
+        "fields_affected": [
+          "trade_terms"
+        ],
+        "fix_action": "SEND_AMENDED_CONFIRMATION",
+        "auto_repairable": false
+      },
+      "routing": {
+        "owning_team": "Middle Office \u2014 Confirmations",
+        "priority": 3,
+        "severity": "MEDIUM",
+        "sla_deadline": "2026-06-24T04:30:57.069485+00:00",
+        "sla_hours": 6,
+        "escalate_to": null
+      },
+      "resolution_memo": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551         TRADE EXCEPTION RESOLUTION MEMO                      \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nException ID : EXC-F66B40EA\nTrade ID     : TRD-2026-6607\nGenerated    : 2026-06-23 22:30:57 UTC\nSeverity     : MEDIUM\nError Type   : CONFIRMATION_MISMATCH\nOwning Team  : Middle Office \u2014 Confirmations\nSLA          : 6 hours\n\nTRADE DETAILS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nAsset Class  : OTC\nSecurity     : FX_FWD_EURUSD_3M\nCounterparty : SCHONFELD\nNotional     : $2,158,382.57\nCurrency     : GBP\nSource System: BLOOMBERG\n\nDIAGNOSIS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nRoot Cause   : CONFIRMATION_MISMATCH\nFields       : trade_terms\nFix Action   : SEND_AMENDED_CONFIRMATION\nAuto-Repair  : No \u2014 manual intervention required\n\n\n\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\nEND OF MEMO \u2014 EXC-F66B40EA\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+      "sql_repair": "-- EXCEPTION AGENT v2 \u2014 CONFIRMATION_MISMATCH \u2014 TRD-2026-6607 \u2014 2026-06-23 22:30:57\n-- No automated repair for CONFIRMATION_MISMATCH \u2014 manual review required\nINSERT INTO exception_audit_log(trade_id,error_type,action,resolved_by) VALUES('TRD-2026-6607','CONFIRMATION_MISMATCH','ROUTED_FOR_MANUAL_REVIEW','EXCEPTION_AGENT_V2');",
+      "llm_analysis": null,
+      "audit_entry": {
+        "exception_id": "EXC-F66B40EA",
+        "action": "TRIAGED",
+        "agent": "TradeExceptionAgent_v2",
+        "timestamp": "2026-06-23T22:30:57.070744+00:00"
+      }
+    },
+    {
+      "exception_id": "EXC-87C15521",
+      "triaged_at": "2026-06-23T22:30:57.070783+00:00",
+      "error_type": "CONFIRMATION_MISMATCH",
+      "severity": "MEDIUM",
+      "category": "Confirmation",
+      "status": "TRIAGED",
+      "diagnosis": {
+        "root_cause": "CONFIRMATION_MISMATCH",
+        "fields_affected": [
+          "trade_terms"
+        ],
+        "fix_action": "SEND_AMENDED_CONFIRMATION",
+        "auto_repairable": false
+      },
+      "routing": {
+        "owning_team": "Middle Office \u2014 Confirmations",
+        "priority": 3,
+        "severity": "MEDIUM",
+        "sla_deadline": "2026-06-24T04:30:57.069759+00:00",
+        "sla_hours": 6,
+        "escalate_to": null
+      },
+      "resolution_memo": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551         TRADE EXCEPTION RESOLUTION MEMO                      \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\nException ID : EXC-87C15521\nTrade ID     : TRD-2026-8564\nGenerated    : 2026-06-23 22:30:57 UTC\nSeverity     : MEDIUM\nError Type   : CONFIRMATION_MISMATCH\nOwning Team  : Middle Office \u2014 Confirmations\nSLA          : 6 hours\n\nTRADE DETAILS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nAsset Class  : FI\nSecurity     : US10Y\nCounterparty : MILLENNIUM\nNotional     : $2,823,813.62\nCurrency     : CAD\nSource System: MUREX\n\nDIAGNOSIS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nRoot Cause   : CONFIRMATION_MISMATCH\nFields       : trade_terms\nFix Action   : SEND_AMENDED_CONFIRMATION\nAuto-Repair  : No \u2014 manual intervention required\n\n\n\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\nEND OF MEMO \u2014 EXC-87C15521\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+      "sql_repair": "-- EXCEPTION AGENT v2 \u2014 CONFIRMATION_MISMATCH \u2014 TRD-2026-8564 \u2014 2026-06-23 22:30:57\n-- No automated repair for CONFIRMATION_MISMATCH \u2014 manual review required\nINSERT INTO exception_audit_log(trade_id,error_type,action,resolved_by) VALUES('TRD-2026-8564','CONFIRMATION_MISMATCH','ROUTED_FOR_MANUAL_REVIEW','EXCEPTION_AGENT_V2');",
+      "llm_analysis": null,
+      "audit_entry": {
+        "exception_id": "EXC-87C15521",
+        "action": "TRIAGED",
+        "agent": "TradeExceptionAgent_v2",
+        "timestamp": "2026-06-23T22:30:57.070786+00:00"
+      }
+    }
+  ]
+}
